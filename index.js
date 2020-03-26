@@ -17,10 +17,12 @@ app.set("views", "views");
 
 //Объявить папку public статичной
 app.use(express.static(__dirname + '/public'));
+//Получить req.body
+app.use(express.urlencoded({extended: true}))
 //Добавляем роуты
 app.use('/', homeRoutes)
-app.use('/add', coursesRoutes)
-app.use('/courses', addRoutes)
+app.use('/courses', coursesRoutes)
+app.use('/add', addRoutes)
 
 const PORT = process.env.PORT || 3000;
 
