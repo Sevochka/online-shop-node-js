@@ -1,46 +1,65 @@
 //Генерация уникального идентификатора
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const path = require("path");
 
 class Course {
     constructor(title, price, img) {
         console.log(title);
-        
+
         this.title = title;
         this.price = price;
         this.img = img;
         this.id = uuidv4();
     }
 
-    toJSON(){
+    toJSON() {
         return {
             title: this.title,
             price: this.price,
             img: this.img,
             id: this.id
-        }
+        };
     }
 
-     async save() {
+    static async update(course) {
         const courses = await Course.getAll();
-        courses.push(this.toJSON())
 
-        return new Promise((res, rej)=>{
+        const idx = courses.findIndex(c => c.id == course.id);
+        courses[idx] = course;
+
+        return new Promise((res, rej) => {
             fs.writeFile(
-                path.join(__dirname, '..', 'data', 'courses.json'),
+                path.join(__dirname, "..", "data", "courses.json"),
                 JSON.stringify(courses),
-                (err)=>{
+                err => {
                     if (err) {
-                        rej(err)
-                    }
-                    else{
-                        res()
+                        rej(err);
+                    } else {
+                        res();
                     }
                 }
-            )
-        })
-        
+            );
+        });
+    }
+
+    async save() {
+        const courses = await Course.getAll();
+        courses.push(this.toJSON());
+
+        return new Promise((res, rej) => {
+            fs.writeFile(
+                path.join(__dirname, "..", "data", "courses.json"),
+                JSON.stringify(courses),
+                err => {
+                    if (err) {
+                        rej(err);
+                    } else {
+                        res();
+                    }
+                }
+            );
+        });
     }
 
     static getAll() {
@@ -59,11 +78,10 @@ class Course {
         });
     }
 
-    static async getById(id){
-        let courses = await Course.getAll()
-        return courses.find(c => c.id === id)
+    static async getById(id) {
+        let courses = await Course.getAll();
+        return courses.find(c => c.id === id);
     }
-
 }
 
 module.exports = Course;
