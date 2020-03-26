@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
-const path = require("path");
 var exphbs = require("express-handlebars");
+//Routes
+const homeRoutes = require('./routes/home')
+const coursesRoutes = require('./routes/courses')
+const addRoutes = require('./routes/add')
 
 const hbs = exphbs.create({
     defaultLayout: "main",
@@ -14,27 +17,10 @@ app.set("views", "views");
 
 //Объявить папку public статичной
 app.use(express.static(__dirname + '/public'));
-
-app.get("/", (req, res) => {
-    res.render("index", {
-        title: "Главная страница",
-        isHome:true
-    });
-});
-
-app.get("/courses", (req, res) => {
-    res.render("courses", {
-        title: "Курсы",
-        isCourses: true
-    });
-});
-
-app.get("/add", (req, res) => {
-    res.render("add", {
-        title: "Добавить курс",
-        isAdd: true
-    });
-});
+//Добавляем роуты
+app.use('/', homeRoutes)
+app.use('/add', coursesRoutes)
+app.use('/courses', addRoutes)
 
 const PORT = process.env.PORT || 3000;
 
