@@ -5,6 +5,8 @@ const path = require("path");
 
 class Course {
     constructor(title, price, img) {
+        console.log(title);
+        
         this.title = title;
         this.price = price;
         this.img = img;
@@ -12,12 +14,12 @@ class Course {
     }
 
     toJSON(){
-        return ({
+        return {
             title: this.title,
             price: this.price,
             img: this.img,
             id: this.id
-        })
+        }
     }
 
      async save() {

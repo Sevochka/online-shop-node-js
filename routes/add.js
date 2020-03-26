@@ -10,8 +10,9 @@ router.get("/", (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    let body = req.body;
-    const course = new Course({...body})
+    
+    const course = new Course(req.body.title, req.body.price, req.body.img)
+
     await course.save();
     res.redirect('/courses')
 })
