@@ -10,7 +10,6 @@ const hbs = exphbs.create({
 
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
-
 app.set("views", "views");
 
 app.get("/", (req, res) => {
