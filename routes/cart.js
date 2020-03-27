@@ -13,8 +13,9 @@ router.get('/', async (req, res) => {
     const cart = await Cart.fetch()
     res.render('cart', {
         title: "Корзина",
-        isCart:true,
-        cart
+        isCart: true,
+        courses: cart.courses,
+        price: cart.price
     })
 })
 
