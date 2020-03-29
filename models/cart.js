@@ -11,13 +11,10 @@ class Cart {
 
     static async add(course){
         const cart = await Cart.fetch()
-
         const idx = cart.courses.findIndex(c=> {
-            c.id === course.id
+            return c.id === course.id
         })
-
         const candidate = cart.courses[idx]
-
         if (candidate) {
             //курс уже есть
             candidate.count++
@@ -42,6 +39,30 @@ class Cart {
         })
     }
 
+    static async remove(course){
+        let cart = await Cart.fetch()
+
+        const idx = cart.courses.findIndex(c=> {
+            c.id === course.id
+        })
+
+        cart.courses = cart.courses.filter((el) => {
+            return el.id !== course.id
+        })
+
+        return new Promise((res, rej) => {
+            fs.writeFile(p, JSON.stringify(cart), err => {
+                if (err) {
+                    rej(err)
+                }
+                else {
+                    res(cart)
+                }
+            })
+        })
+        
+    }
+
     static async fetch(){
         return new Promise((resolve, reject) => {
             fs.readFile(p, 'utf-8', (err, data) => {
@@ -54,5 +75,5 @@ class Cart {
         })
     }
 }
-//15
+
 module.exports = Cart;

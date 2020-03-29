@@ -19,4 +19,11 @@ router.get('/', async (req, res) => {
     })
 })
 
+router.delete('/remove/:id', async (req, res)=> {
+    const course = await Courses.getById(req.params.id)
+    const cart = await Cart.remove(course)
+    res.json(cart)
+    res.redirect('/cart')
+})
+
 module.exports = router;

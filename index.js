@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 var exphbs = require("express-handlebars");
+var path = require("path");
 //Routes
 const homeRoutes = require('./routes/home')
 const coursesRoutes = require('./routes/courses')
@@ -17,7 +18,7 @@ app.set("view engine", "hbs");
 app.set("views", "views");
 
 //Объявить папку public статичной
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, "public")));
 //Получить req.body
 app.use(express.urlencoded({extended: true}))
 //Добавляем роуты
