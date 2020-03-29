@@ -39,16 +39,27 @@ class Cart {
         })
     }
 
-    static async remove(course){
+    static async remove(id){
         let cart = await Cart.fetch()
 
         const idx = cart.courses.findIndex(c=> {
-            c.id === course.id
+            return c.id === id
         })
 
-        cart.courses = cart.courses.filter((el) => {
-            return el.id !== course.id
-        })
+        const candidate = cart.courses[idx]
+
+        console.log(candidate);
+        
+        if (candidate.count > 1) {
+            //Курсов больше чем единица
+            candidate.count -= 1;
+            cart.courses[idx] = candidate;
+        } else {
+            //Курс один
+            cart.courses.splice(idx, 1)
+        }
+        
+        cart.price -= candidate.price;
 
         return new Promise((res, rej) => {
             fs.writeFile(p, JSON.stringify(cart), err => {

@@ -15,7 +15,7 @@ if ($cart) {
       })
       .then(res => res.json())
       .then(cart => {
-        
+        console.log(cart);
       })
 
     }
