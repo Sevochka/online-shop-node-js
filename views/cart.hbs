@@ -1,1 +1,27 @@
-<h1>Cart</h1>
+{{#if courses.length}}
+<table class="striped">
+    <thead>
+    <tr>
+        <th>Наименование</th>
+        <th>Количество</th>
+        <th>Цена</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each courses}}
+    <tr>
+        <th>{{title}}</th>
+        <th>{{count}}</th>
+        <th>{{price}}</th>
+        <th>
+            <button class="btn btn-danger">Удалить</button>
+        </th>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+<h1>Цена: {{price}}</h1>
+{{else}}
+<h1>Пусто</h1>
+{{/if}}
