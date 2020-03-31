@@ -32,8 +32,6 @@ userSchema.methods.addToCart = function(course) {
     const index = items.findIndex(c => {
         return c.id.toString() === course.id.toString()
     })
-
-    console.log(index);
     
     if (index === -1) {
         items.push({
