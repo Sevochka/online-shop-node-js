@@ -9,9 +9,16 @@ const coursesRoutes = require("./routes/courses");
 const addRoutes = require("./routes/add");
 const cartRoutes = require("./routes/cart");
 
+//Непонятный код со стак оферфлоу, который каким-то чудесным образом
+//решил проблему
+//--todo - разобраться потом что происходит
+const Handlebars = require('handlebars')
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
+
 const hbs = exphbs.create({
     defaultLayout: "main",
-    extname: "hbs"
+    extname: "hbs",
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
 });
 
 app.engine("hbs", hbs.engine);
@@ -35,6 +42,12 @@ const PORT = process.env.PORT || 3000;
 //--Не забыть, что аксес к базе через мой домашнйи айпи!
 const password = "ArNCYAJJdUkzLVMo";
 const uri = `mongodb+srv://sevka:${password}@cluster0-e6cu6.mongodb.net/shop`;
+
+//Исправляет ошибку при edit курса
+//DOCS: 'useFindAndModify': true by default. 
+//Set to false to make findOneAndUpdate() and findOneAndRemove() 
+//use native findOneAndUpdate() rather than findAndModify()
+mongoose.set('useFindAndModify', false);
 
 //Самовызывающайся асинк функция для работы с промисами
 (async function start() {
