@@ -30,6 +30,10 @@ app.use('/cart', cartRoutes)
 
 const PORT = process.env.PORT || 3000;
 
+//MongoDB data
+const password = 'ArNCYAJJdUkzLVMo';
+const uri = `mongodb+srv://sevka:${password}@cluster0-e6cu6.mongodb.net/test?retryWrites=true&w=majority`;
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
