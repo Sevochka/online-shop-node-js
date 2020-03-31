@@ -1,87 +1,19 @@
-//Генерация уникального идентификатора
-const { v4: uuidv4 } = require("uuid");
-const fs = require("fs");
-const path = require("path");
+const {Schema, model} = require('mongoose')
 
-class Course {
-    constructor(title, price, img) {
-        console.log(title);
-
-        this.title = title;
-        this.price = price;
-        this.img = img;
-        this.id = uuidv4();
+const course = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    img: {
+        type: String,
+        required: true
     }
 
-    toJSON() {
-        return {
-            title: this.title,
-            price: this.price,
-            img: this.img,
-            id: this.id
-        };
-    }
+})
 
-    static async update(course) {
-        const courses = await Course.getAll();
-
-        const idx = courses.findIndex(c => c.id == course.id);
-        courses[idx] = course;
-
-        return new Promise((res, rej) => {
-            fs.writeFile(
-                path.join(__dirname, "..", "data", "courses.json"),
-                JSON.stringify(courses),
-                err => {
-                    if (err) {
-                        rej(err);
-                    } else {
-                        res();
-                    }
-                }
-            );
-        });
-    }
-
-    async save() {
-        const courses = await Course.getAll();
-        courses.push(this.toJSON());
-
-        return new Promise((res, rej) => {
-            fs.writeFile(
-                path.join(__dirname, "..", "data", "courses.json"),
-                JSON.stringify(courses),
-                err => {
-                    if (err) {
-                        rej(err);
-                    } else {
-                        res();
-                    }
-                }
-            );
-        });
-    }
-
-    static getAll() {
-        return new Promise((res, rej) => {
-            fs.readFile(
-                path.join(__dirname, "..", "data", "courses.json"),
-                "utf-8",
-                (err, data) => {
-                    if (err) {
-                        rej(err);
-                    } else {
-                        res(JSON.parse(data));
-                    }
-                }
-            );
-        });
-    }
-
-    static async getById(id) {
-        let courses = await Course.getAll();
-        return courses.find(c => c.id === id);
-    }
-}
-
-module.exports = Course;
+module.exports = model('Course', course)

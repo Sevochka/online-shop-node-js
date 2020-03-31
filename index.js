@@ -34,7 +34,7 @@ const PORT = process.env.PORT || 3000;
 //MongoDB data
 //--Не забыть, что аксес к базе через мой домашнйи айпи!
 const password = "ArNCYAJJdUkzLVMo";
-const uri = `mongodb+srv://sevka:${password}@cluster0-e6cu6.mongodb.net/test?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://sevka:${password}@cluster0-e6cu6.mongodb.net/shop`;
 
 //Самовызывающайся асинк функция для работы с промисами
 (async function start() {
