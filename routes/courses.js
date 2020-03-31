@@ -3,7 +3,12 @@ const Course = require("../models/course");
 const router = Router();
 
 router.get("/", async (req, res) => {
-    const courses = await Course.find();
+    //populate() - автоматически заменить айдишник пользхователя из одной коллекции
+    //полноценным пользователем 
+    const courses = await Course.find()
+    .populate('userId', 'email name')
+    .select('price title img')
+    
     res.render("courses", {
         title: "Курсы",
         isCourses: true,

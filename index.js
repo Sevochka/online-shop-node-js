@@ -3,6 +3,7 @@ const app = express();
 var exphbs = require("express-handlebars");
 var path = require("path");
 const mongoose = require("mongoose");
+const User = require('./models/user')
 //Routes
 const homeRoutes = require("./routes/home");
 const coursesRoutes = require("./routes/courses");
@@ -24,6 +25,16 @@ const hbs = exphbs.create({
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
+
+app.use(async (req, res, next) => {
+    try {
+        const user = await User.findById('5e8336162ef2323f04a798ce')
+        req.user = user
+        next()
+    } catch (error) {
+        throw error
+    }
+});
 
 //Объявить папку public статичной
 app.use(express.static(path.join(__dirname, "public")));
@@ -53,6 +64,15 @@ mongoose.set('useFindAndModify', false);
 (async function start() {
     try {
         await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        const candidate = await User.findOne();
+        if (!candidate) {
+            const user = new User({
+                email: 'test',
+                name: 'Seva',
+                cart: {items: []}
+            })
+            await user.save()
+        }
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
         });
