@@ -9,16 +9,30 @@ router.post('/add', async (req, res)=> {
 })
 
 router.get('/', async (req, res) => {
-    //const cart = await Cart.fetch()
+    //Заполнение 
+    const user = await req.user
+        .populate('cart.items.courseId')
+        .execPopulate();
+  
+    let price = 0;
+    const courses =  user.cart.items.map(c => {
+        //Считаем цену
+        price += c.courseId._doc.price * c.current; 
+        return {...c.courseId._doc, current: c.current};
+    });
+
+   
     res.render('cart', {
         title: "Корзина",
         isCart: true,
-        //courses: cart.courses,
-        //price: cart.price
-    })
+        courses: courses,
+        price
+    });
 })
 
 router.delete('/remove/:id', async (req, res)=> {
+    console.log("dfhhdf");
+    
     const cart = await Cart.remove(req.params.id)
     res.json(cart)
 })
