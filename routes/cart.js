@@ -2,6 +2,7 @@ const {Router} = require('express');
 const Courses =  require("../models/course")
 const router = Router();
 
+
 router.post('/add', async (req, res)=> {
     const course = await Courses.findById(req.body.id);
     await req.user.addToCart(course)
@@ -21,7 +22,6 @@ router.get('/', async (req, res) => {
         return {...c.courseId._doc, current: c.current};
     });
 
-   
     res.render('cart', {
         title: "Корзина",
         isCart: true,
@@ -30,11 +30,10 @@ router.get('/', async (req, res) => {
     });
 })
 
-router.delete('/remove/:id', async (req, res)=> {
-    console.log("dfhhdf");
-    
-    const cart = await Cart.remove(req.params.id)
-    res.json(cart)
+router.post('/remove', async (req, res)=> {
+    console.log(req.body);
+    //await User.findByIdAndRemove(req.body.id);
+    res.redirect("/cart")
 })
 
 module.exports = router;
