@@ -20,10 +20,10 @@ if ($cart) {
                 .then(res => res.json())
                 .then(cart => {
                     if (cart.courses.length) {
+                        let price = 0;
                         const HTML = cart.courses
                             .map(c => {
-                                console.log(c);
-                                
+                                price += +c.price * +c.current;
                                 return `
                                         <tbody>
                                         <tr>
@@ -31,7 +31,7 @@ if ($cart) {
                                             <th>${c.current}</th>
                                             <th>${c.price}</th>
                                             <th>
-                                                <button class="btn btn-danger remove" data-id="${c.id}">Удалить</button>
+                                                <button class="btn btn-danger remove" data-id="${c._id}">Удалить</button>
                                             </th>
                                         </tr>
                                         </tbody>
@@ -39,10 +39,11 @@ if ($cart) {
                             })
                             .join("");
 
+                        console.log(price);
                         document.querySelector("tbody").innerHTML = HTML;
                         document.querySelector(
                             "#price"
-                        ).innerText = `${toCurrency(cart.price)}`;
+                        ).innerText = `${toCurrency(price)}`;
                     } else {
                         $cart.innerHTML = "<p>Корзина пуста</p>";
                     }
