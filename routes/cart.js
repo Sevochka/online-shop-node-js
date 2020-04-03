@@ -27,13 +27,27 @@ router.get('/', async (req, res) => {
         isCart: true,
         courses: courses,
         price
-    });
+    }); 
 })
 
-router.post('/remove', async (req, res)=> {
-    console.log(req.body);
-    //await User.findByIdAndRemove(req.body.id);
-    res.redirect("/cart")
+router.delete('/remove/:id', async (req, res)=> {
+
+    await req.user.removeFromCart(req.params.id);
+    const user = await req.user
+        .populate('cart.items.courseId')
+        .execPopulate();
+    
+    let price;
+    const courses = user.cart.items.map(c => {
+        price += c.courseId._doc.price * c.current; 
+        return {...c.courseId._doc, current: c.current};
+    });
+    const cart = {
+        courses
+    }
+   
+    
+    res.status(200).json(cart)
 })
 
 module.exports = router;

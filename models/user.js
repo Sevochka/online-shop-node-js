@@ -48,4 +48,24 @@ userSchema.methods.addToCart = function(course) {
 
 }
 
+userSchema.methods.removeFromCart = function(id) {
+    
+    let items = [...this.cart.items];
+    //console.log(items);
+    
+    const idx = items.findIndex(c => {
+        return c.courseId.toString() === id.toString();
+    })
+
+    if (items[idx].current === 1) {
+        //items = items.splice(idx, 1)
+        items = items.filter(c => c.courseId.toString() !== id.toString())
+    } else {
+        items[idx].current--;
+    }
+    
+    this.cart = {items}
+    return this.save()
+}
+
 module.exports = model('User', userSchema)

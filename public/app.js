@@ -22,18 +22,20 @@ if ($cart) {
                     if (cart.courses.length) {
                         const HTML = cart.courses
                             .map(c => {
+                                console.log(c);
+                                
                                 return `
-            <tbody>
-              <tr>
-                  <th>${c.title}</th>
-                  <th>${c.count}</th>
-                  <th>${c.price}</th>
-                  <th>
-                      <button class="btn btn-danger remove" data-id="${c.id}">Удалить</button>
-                  </th>
-              </tr>
-            </tbody>
-            `;
+                                        <tbody>
+                                        <tr>
+                                            <th>${c.title}</th>
+                                            <th>${c.current}</th>
+                                            <th>${c.price}</th>
+                                            <th>
+                                                <button class="btn btn-danger remove" data-id="${c.id}">Удалить</button>
+                                            </th>
+                                        </tr>
+                                        </tbody>
+                                        `;
                             })
                             .join("");
 

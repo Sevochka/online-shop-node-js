@@ -16,10 +16,7 @@
                 <th>{{current}}</th>
                 <th>{{price}}</th>
                 <th>
-                    <form action='/cart/remove/' method="POST">
-                        <input type="hidden" name="id" value={{_id}}>
-                        <button class="btn btn-danger remove" type="submit">Удалить</button>
-                    </form>
+                    <button class="btn btn-danger remove" type="submit" data-id="{{_id}}">Удалить</button>
                 </th>
             </tr>
             {{/each}}
