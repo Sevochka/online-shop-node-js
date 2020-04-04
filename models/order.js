@@ -7,7 +7,7 @@ const orderSchema = new Schema({
                 type: Object,
                 required: true
             },
-            count: {
+            current: {
                 type: Number,
                 required: true
             }
