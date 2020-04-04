@@ -4,21 +4,24 @@ const Order = require("../models/order");
 
 router.get("/", async (req, res) => {
     try {
-        const orders = await Order.find({
+        const mainInfo = await Order.find({
             'user.userId': req.user._id
-        }).populate('user.userId')
+        })
+        .populate('user.userId')
+
+        const orders = mainInfo.map(order => {
+            return {
+                ...order._doc, 
+                price: order.courses.reduce((total, c) => {
+                    return total += c.current * c.course.price
+                })
+            }
+        });
 
         res.render("orders", {
             isOrder: true,
             title: "Заказы",
-            orders: orders.map(order => {
-                return {
-                    ...order._doc, 
-                    price: order.courses.reduce((total, c) => {
-                        return total += c.current * c.course.price
-                    })
-                }
-            })
+            orders
         });
     } catch (error) {
         throw error;
@@ -28,9 +31,10 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const user = await req.user
-            .populate("cart.items.courseID")
+            .populate("cart.items.courseId")
             .execPopulate();
 
+            
         const courses = user.cart.items.map(el => {
             return { current: el.current, course: { ...el.courseId._doc } };
         });
