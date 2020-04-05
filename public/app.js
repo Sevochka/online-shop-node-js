@@ -9,6 +9,9 @@ document.querySelectorAll("#price").forEach(node => {
     node.textContent = toCurrency(node.textContent);
 });
 
+//Инизиацлизация табов
+var instance = M.Tabs.init(document.querySelectorAll('.tabs'));
+
 //stackoverflow
 const toDate = date => {
     return new Intl.DateTimeFormat('ri-RU', {
