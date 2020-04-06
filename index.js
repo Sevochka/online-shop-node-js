@@ -3,14 +3,16 @@ const app = express();
 var exphbs = require("express-handlebars");
 var path = require("path");
 const mongoose = require("mongoose");
-const User = require('./models/user')
+const User = require('./models/user');
+const session = require("express-session");
+const varMiddleware = require("./middleware/variables")
 //Routes
 const homeRoutes = require("./routes/home");
 const coursesRoutes = require("./routes/courses");
 const addRoutes = require("./routes/add");
 const cartRoutes = require("./routes/cart");
 const ordersRoutes = require("./routes/orders");
-const authRoutes = require('./routes/auth')
+const authRoutes = require('./routes/auth');
 
 //Непонятный код со стак оферфлоу, который каким-то чудесным образом
 //решил проблему
@@ -37,6 +39,14 @@ app.use(async (req, res, next) => {
         throw error
     }
 });
+
+//Настройка сессий
+app.use(session({
+    secret:'hello, world',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(varMiddleware);
 
 //Объявить папку public статичной
 app.use(express.static(path.join(__dirname, "public")));
