@@ -30,15 +30,17 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
 
-app.use(async (req, res, next) => {
-    try {
-        const user = await User.findById('5e8336162ef2323f04a798ce')
-        req.user = user
-        next()
-    } catch (error) {
-        throw error
-    }
-});
+//ненужный мидлвеар
+
+// app.use(async (req, res, next) => {
+//     try {
+//         const user = await User.findById('5e8336162ef2323f04a798ce')
+//         req.user = user
+//         next()
+//     } catch (error) {
+//         throw error
+//     }
+// });
 
 //Настройка сессий
 app.use(session({
@@ -77,15 +79,19 @@ mongoose.set('useFindAndModify', false);
 (async function start() {
     try {
         await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-        const candidate = await User.findOne();
-        if (!candidate) {
-            const user = new User({
-                email: 'test',
-                name: 'Seva',
-                cart: {items: []}
-            })
-            await user.save()
-        }
+        
+        //ненжуно ибо сессия все решает 
+
+        // const candidate = await User.findOne();
+        // if (!candidate) {
+        //     const user = new User({
+        //         email: 'test',
+        //         name: 'Seva',
+        //         cart: {items: []}
+        //     })
+        //     await user.save()
+        // }
+        
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
         });
