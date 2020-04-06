@@ -11,7 +11,6 @@ router.post('/add', auth, async (req, res)=> {
 
 router.get('/', auth, async (req, res) => {
     //Заполнение 
-    console.log(req.session.user);
     const user = await req.user
         .populate('cart.items.courseId')
         .execPopulate();
