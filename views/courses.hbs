@@ -14,11 +14,14 @@
             </div>
             <div class="card-action action">
                 <a href="/courses/{{id}}" target="_blank">Открыть курс</a>
+                {{!-- @root - корневой элемент, ибо без него ищет в each --}}
+                {{#if @root.isAuth}}
                 <a href="/courses/{{id}}/edit?allow=true">Редактировать</a>
                 <form action="/cart/add" method="POST">
                 <input type="hidden" name="id" value="{{id}}">
                     <button type="submit" class="btn btn-primary">AddToCart</button>
                 </form>
+                {{/if}}
             </div>
         </div>
     </div>

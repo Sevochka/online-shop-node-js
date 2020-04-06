@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const User = require('./models/user');
 const session = require("express-session");
 const varMiddleware = require("./middleware/variables")
+const MongoStore = require('connect-mongodb-session')(session)
 //Routes
 const homeRoutes = require("./routes/home");
 const coursesRoutes = require("./routes/courses");
@@ -19,6 +20,16 @@ const authRoutes = require('./routes/auth');
 //--todo - разобраться потом что происходит
 const Handlebars = require('handlebars')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
+
+//MongoDB data
+//--Не забыть, что аксес к базе через мой домашнйи айпи!
+const password = "ArNCYAJJdUkzLVMo";
+const uri = `mongodb+srv://sevka:${password}@cluster0-e6cu6.mongodb.net/shop`;
+
+const store = new MongoStore({
+    collection: 'sessions',
+    uri
+})
 
 const hbs = exphbs.create({
     defaultLayout: "main",
@@ -46,7 +57,8 @@ app.set("views", "views");
 app.use(session({
     secret:'hello, world',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false, 
+    store
 }));
 app.use(varMiddleware);
 
@@ -64,10 +76,6 @@ app.use('/auth', authRoutes)
 
 const PORT = process.env.PORT || 3000;
 
-//MongoDB data
-//--Не забыть, что аксес к базе через мой домашнйи айпи!
-const password = "ArNCYAJJdUkzLVMo";
-const uri = `mongodb+srv://sevka:${password}@cluster0-e6cu6.mongodb.net/shop`;
 
 //Исправляет ошибку при edit курса
 //DOCS: 'useFindAndModify': true by default. 
@@ -91,7 +99,7 @@ mongoose.set('useFindAndModify', false);
         //     })
         //     await user.save()
         // }
-        
+
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
         });
