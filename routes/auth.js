@@ -18,6 +18,7 @@ router.get('/logout', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const user = await User.findById('5e8336162ef2323f04a798ce');
+    //Сохраняем пользователя в обхекты сесиии, чтобы потом хватать
     req.session.user = user;
     req.session.isAuthenticated = true;
     //Для того, чтобы редирект произошел после установления сессии
