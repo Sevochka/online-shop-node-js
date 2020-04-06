@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const User = require('./models/user');
 const session = require("express-session");
 const varMiddleware = require("./middleware/variables")
+const userMiddleware = require("./middleware/user")
 const MongoStore = require('connect-mongodb-session')(session)
 //Routes
 const homeRoutes = require("./routes/home");
@@ -60,7 +61,10 @@ app.use(session({
     saveUninitialized: false, 
     store
 }));
+
+//midlewares
 app.use(varMiddleware);
+app.use(userMiddleware);
 
 //Объявить папку public статичной
 app.use(express.static(path.join(__dirname, "public")));
