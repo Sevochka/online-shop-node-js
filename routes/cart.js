@@ -1,15 +1,15 @@
 const {Router} = require('express');
 const Courses =  require("../models/course")
 const router = Router();
+const auth = require("../middleware/auth")
 
-
-router.post('/add', async (req, res)=> {
+router.post('/add', auth, async (req, res)=> {
     const course = await Courses.findById(req.body.id);
     await req.user.addToCart(course)
     res.redirect('/cart')
 })
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     //Заполнение 
     console.log(req.session.user);
     const user = await req.user
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
     }); 
 })
 
-router.delete('/remove/:id', async (req, res)=> {
+router.delete('/remove/:id', auth, async (req, res)=> {
 
     await req.user.removeFromCart(req.params.id);
     const user = await req.user
