@@ -3,6 +3,7 @@ const {
 } = require("express");
 const router = Router();
 const User = require("../models/user");
+const encryptor = require('bcryptjs');
 
 router.get("/login", async (req, res) => {
     res.render("auth/login", {
@@ -29,7 +30,7 @@ router.post("/login", async (req, res) => {
             email
         })
         if (candidate) {
-            const areSame = password === candidate.password;
+            const areSame = await encryptor.compare(password, candidate.password)
 
             if (areSame) {
                 //Сохраняем пользователя в обхекты сесиии, чтобы потом хватать
@@ -66,18 +67,23 @@ router.post("/register", async (req, res) => {
 
         if (isExist) {
             return res.redirect('/auth/login#register')
+        } else {
+            //Шифратор паролей, второй параметр - точность шифратора - чем больше, тем круче шифрование
+            //но дольше времени занимает
+            const hashPassword = await encryptor.hash(password, 10);
+            console.log(hashPassword);
+            
+            const user = new User({
+                email,
+                name,
+                password: hashPassword,
+                cart: {
+                    items: []
+                }
+            })
+            await user.save();
+            res.redirect('/auth/login#login')
         }
-
-        const user = new User({
-            email,
-            name,
-            password,
-            cart: {
-                items: []
-            }
-        })
-        await user.save();
-        res.redirect('/auth/login#login')
     } catch (error) {
         throw error
     }
