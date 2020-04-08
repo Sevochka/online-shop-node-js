@@ -11,14 +11,15 @@ router.get("/", auth, async (req, res) => {
         .populate('user.userId')
 
         const orders = mainInfo.map(order => {
+            //console.log(order.courses[0].current);
+            //console.log(order.courses[0].course.price);
             return {
                 ...order._doc, 
                 price: order.courses.reduce((total, c) => {
                     return total += c.current * c.course.price
-                })
+                }, 0)
             }
         });
-
         res.render("orders", {
             isOrder: true,
             title: "Заказы",

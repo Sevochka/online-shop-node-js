@@ -15,10 +15,11 @@
                     <ol>
                         {{#each courses}}
                         <li>
-                            {{course.title}}
+                            {{course.title}} - {{course.price}}
                         </li>
                         {{/each}}
                     </ol>
+                    <h1><span id="price">{{price}}</span></h1>
 
                 </div>
             </div>
