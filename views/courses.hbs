@@ -1,4 +1,4 @@
-<h1 class="isLeft">Courses</h1>
+<h1 class="isLeft" style="margin-top: 3rem;">Courses</h1>
 
 {{#if courses.length}}
 <div class="columns1">
@@ -6,8 +6,8 @@
     <div class="column">
         <div class="card">
             <div class="card-image">
-                <figure class="image is-4by3">
-                    <img src="{{img}}" alt={{title}}>
+                <figure class="image is-4by3" style="height: 350px;">
+                    <img src="{{img}}" alt={{title}} height="100%">
                 </figure>
             </div>
             <div class="card-content">
@@ -25,13 +25,13 @@
                 </div> --}}
             </div>
             <footer class="card-footer">
-                <a class="card-footer-item button is-link is-light" href="/courses/{{id}}" target="_blank">Open</a>
+                <a class="card-footer-item button is-link is-light" href="/courses/{{id}}" target="_blank">Открыть</a>
                 {{#if @root.isAuth}}
                 <a class="card-footer-item button is-danger is-light" href="/courses/{{id}}/edit?allow=true">Редактировать</a>
                 <form action="/cart/add" method="POST"></form>
                     <input type="hidden" name="_csrf" value="{{@root.csrfToken}}">
                     <input type="hidden" name="id" value="{{id}}">
-                   <button type="submit" class="button is-success is-light">Добавить в корзину</button> 
+                   <button type="submit" class="card-footer-item button is-success is-light">Добавить в корзину</button> 
                 </form>
                 {{/if}}
             </footer>
