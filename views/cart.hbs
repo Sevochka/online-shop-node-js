@@ -25,6 +25,7 @@
     <h1>Цена: <span id="price">{{price}}</span></h1>
 
     <form action="/orders" method="post">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <button type="submit" class="btn">Сделать заказ</button>
     </form>
     {{else}}

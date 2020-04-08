@@ -18,7 +18,8 @@
                 {{#if @root.isAuth}}
                 <a href="/courses/{{id}}/edit?allow=true">Редактировать</a>
                 <form action="/cart/add" method="POST">
-                <input type="hidden" name="id" value="{{id}}">
+                    <input type="hidden" name="_csrf" value="{{@root.csrfToken}}">
+                    <input type="hidden" name="id" value="{{id}}">
                     <button type="submit" class="btn btn-primary">AddToCart</button>
                 </form>
                 {{/if}}

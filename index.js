@@ -3,6 +3,7 @@ const app = express();
 var exphbs = require("express-handlebars");
 var path = require("path");
 const mongoose = require("mongoose");
+const csrf = require('csurf')
 const User = require('./models/user');
 const session = require("express-session");
 const varMiddleware = require("./middleware/variables")
@@ -41,19 +42,10 @@ const hbs = exphbs.create({
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "views");
-
-//ненужный мидлвеар
-
-// app.use(async (req, res, next) => {
-//     try {
-//         const user = await User.findById('5e8336162ef2323f04a798ce')
-//         req.user = user
-//         next()
-//     } catch (error) {
-//         throw error
-//     }
-// });
-
+//Объявить папку public статичной
+app.use(express.static(path.join(__dirname, "public")));
+//Получить req.body
+app.use(express.urlencoded({ extended: true }));
 //Настройка сессий
 app.use(session({
     secret:'hello, world',
@@ -62,14 +54,10 @@ app.use(session({
     store
 }));
 
+app.use(csrf())
 //midlewares
 app.use(varMiddleware);
 app.use(userMiddleware);
-
-//Объявить папку public статичной
-app.use(express.static(path.join(__dirname, "public")));
-//Получить req.body
-app.use(express.urlencoded({ extended: true }));
 //Добавляем роуты
 app.use("/", homeRoutes);
 app.use("/courses", coursesRoutes);
