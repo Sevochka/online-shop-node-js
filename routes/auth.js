@@ -9,6 +9,8 @@ router.get("/login", async (req, res) => {
     res.render("auth/login", {
         title: "Авторизация",
         isLogin: true,
+        registerError: req.flash('registerError'),
+        loginError: req.flash('loginError')
     });
 });
 
@@ -30,10 +32,11 @@ router.post("/login", async (req, res) => {
             email
         })
         if (candidate) {
+            //Сравниваем пароль из БД с введенным 
             const areSame = await encryptor.compare(password, candidate.password)
 
             if (areSame) {
-                //Сохраняем пользователя в обхекты сесиии, чтобы потом хватать
+                //Сохраняем пользователя в объект сесиии, чтобы потом хватать
                 req.session.user = candidate;
                 req.session.isAuthenticated = true;
                 //Для того, чтобы редирект произошел после установления сессии
@@ -42,9 +45,14 @@ router.post("/login", async (req, res) => {
                     else res.redirect("/");
                 });
             } else {
+                //Если пароли из БД и введенный не свопадают
+                //Если бы в детстве тебя почаще пороли, тебе бы подходили пароли, ну а так ты не подходишь по роли
+                req.flash('loginError', 'Неправильный пароль')
                 res.redirect('/auth/login#login')
             }
         } else {
+            //Если маил не свопадает
+            req.flash('loginError', 'Такого пользователя не существует')
             res.redirect('/auth/login#login')
         }
     } catch (error) {
@@ -66,6 +74,7 @@ router.post("/register", async (req, res) => {
         })
 
         if (isExist) {
+            req.flash('registerError', 'Такой email уже занят')
             return res.redirect('/auth/login#register')
         } else {
             //Шифратор паролей, второй параметр - точность шифратора - чем больше, тем круче шифрование

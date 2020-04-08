@@ -3,8 +3,8 @@ const app = express();
 var exphbs = require("express-handlebars");
 var path = require("path");
 const mongoose = require("mongoose");
-const csrf = require('csurf')
-const User = require('./models/user');
+const csrf = require('csurf');
+const flash = require('connect-flash');
 const session = require("express-session");
 const varMiddleware = require("./middleware/variables")
 const userMiddleware = require("./middleware/user")
@@ -53,8 +53,10 @@ app.use(session({
     saveUninitialized: false, 
     store
 }));
-
-app.use(csrf())
+//Защита сессий
+app.use(csrf());
+//
+app.use(flash());
 //midlewares
 app.use(varMiddleware);
 app.use(userMiddleware);

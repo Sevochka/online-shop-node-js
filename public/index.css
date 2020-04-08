@@ -1,5 +1,5 @@
 .nav-wrapper {
-    padding: 0 2rem; 
+    padding: 0 2rem;
 }
 
 .price {
@@ -31,10 +31,18 @@
     align-items: center;
     justify-content: center;
 }
-.striped{
+.striped {
     margin-top: 1rem;
 }
-.auth{
+.auth {
     margin-top: 40px;
 }
 
+.alert {
+    padding: .5rem 1rem;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: rgba(255, 0, 0, 0.3);
+    color: red;
+}
