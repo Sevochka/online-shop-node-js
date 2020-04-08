@@ -95,6 +95,13 @@ h1{
 }
 .card{
     width: 400px;
+    border-radius: 100px 100px 0px 0px;
+}
+.card img {
+    border-radius: 100px 100px 0px 0px;
+}
+.card-footer{
+    border-radius: 100px 100px 0px 0px;
 }
 .card-footer button{
     height: auto;
