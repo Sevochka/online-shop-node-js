@@ -1,47 +1,51 @@
-const toCurrency = price => {
+const toCurrency = (price) => {
     return new Intl.NumberFormat("ru-RU", {
         currency: "rub",
-        style: "currency"
+        style: "currency",
     }).format(price);
 };
 
-document.querySelectorAll("#price").forEach(node => {
+document.querySelectorAll("#price").forEach((node) => {
     node.textContent = toCurrency(node.textContent);
 });
 
 //Инизиацлизация табов
-var instance = M.Tabs.init(document.querySelectorAll('.tabs'));
+var instance = M.Tabs.init(document.querySelectorAll(".tabs"));
 
 //stackoverflow
-const toDate = date => {
-    return new Intl.DateTimeFormat('ri-RU', {
-        day: '2-digit', 
-        month:"long",
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-    }).format(new Date(date))
-}
+const toDate = (date) => {
+    return new Intl.DateTimeFormat("ri-RU", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    }).format(new Date(date));
+};
 
-document.querySelectorAll('.date').forEach(node => {
-    node.textContent = toDate(node.textContent)
-})
+document.querySelectorAll(".date").forEach((node) => {
+    node.textContent = toDate(node.textContent);
+});
 
 const $cart = document.querySelector("#cart");
 if ($cart) {
-    $cart.addEventListener("click", event => {
+    $cart.addEventListener("click", (event) => {
         if (event.target.classList.contains("remove")) {
             const id = event.target.dataset.id;
+            const csrfToken = event.target.dataset.csrf;
             fetch("/cart/remove/" + id, {
-                method: "delete"
+                method: "delete",
+                headers: {
+                    'X-XSRF-TOKEN': csrfToken
+                }
             })
-                .then(res => res.json())
-                .then(cart => {
+                .then((res) => res.json())
+                .then((cart) => {
                     if (cart.courses.length) {
                         let price = 0;
                         const HTML = cart.courses
-                            .map(c => {
+                            .map((c) => {
                                 price += +c.price * +c.current;
                                 return `
                                         <tbody>
@@ -50,7 +54,7 @@ if ($cart) {
                                             <th>${c.current}</th>
                                             <th>${c.price}</th>
                                             <th>
-                                                <button class="btn btn-danger remove" data-id="${c._id}">Удалить</button>
+                                                <button class="btn btn-danger remove" data-id="${c._id}" data-csrf="${csrfToken}">Удалить</button>
                                             </th>
                                         </tr>
                                         </tbody>

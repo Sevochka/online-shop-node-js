@@ -16,7 +16,12 @@
                 <th>{{current}}</th>
                 <th>{{price}}</th>
                 <th>
-                    <button class="btn btn-danger remove" type="submit" data-id="{{_id}}">Удалить</button>
+                    <button 
+                        class="btn btn-danger remove" 
+                        type="submit" data-id="{{_id}}" 
+                        data-csrf="{{@root.csrfToken}}">
+                            Удалить
+                    </button>
                 </th>
             </tr>
             {{/each}}
