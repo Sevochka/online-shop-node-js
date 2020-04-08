@@ -9,15 +9,22 @@ router.get("/login", async (req, res) => {
     res.render("auth/login", {
         title: "Авторизация",
         isLogin: true,
-        registerError: req.flash('registerError'),
         loginError: req.flash('loginError')
+    });
+});
+
+router.get("/register", async (req, res) => {
+    res.render("auth/register", {
+        title: "Регистрация",
+        isRegister: true,
+        registerError: req.flash('registerError')
     });
 });
 
 router.get("/logout", async (req, res) => {
     //req.session.isAuthenticated = false;
     req.session.destroy(() => {
-        res.redirect("/auth/login#login");
+        res.redirect("/auth/login");
     });
 });
 
@@ -53,7 +60,7 @@ router.post("/login", async (req, res) => {
         } else {
             //Если маил не свопадает
             req.flash('loginError', 'Такого пользователя не существует')
-            res.redirect('/auth/login#login')
+            res.redirect('/auth/login')
         }
     } catch (error) {
         throw error
@@ -75,7 +82,7 @@ router.post("/register", async (req, res) => {
 
         if (isExist) {
             req.flash('registerError', 'Такой email уже занят')
-            return res.redirect('/auth/login#register')
+            return res.redirect('/auth/login')
         } else {
             //Шифратор паролей, второй параметр - точность шифратора - чем больше, тем круче шифрование
             //но дольше времени занимает
@@ -91,7 +98,7 @@ router.post("/register", async (req, res) => {
                 }
             })
             await user.save();
-            res.redirect('/auth/login#login')
+            res.redirect('/auth/login')
         }
     } catch (error) {
         throw error

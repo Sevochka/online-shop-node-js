@@ -1,3 +1,5 @@
+
+
 const toCurrency = (price) => {
     return new Intl.NumberFormat("ru-RU", {
         currency: "rub",
@@ -9,8 +11,13 @@ document.querySelectorAll("#price").forEach((node) => {
     node.textContent = toCurrency(node.textContent);
 });
 
-//Инизиацлизация табов
-var instance = M.Tabs.init(document.querySelectorAll(".tabs"));
+////
+
+
+
+
+
+////
 
 //stackoverflow
 const toDate = (date) => {
@@ -37,8 +44,8 @@ if ($cart) {
             fetch("/cart/remove/" + id, {
                 method: "delete",
                 headers: {
-                    'X-XSRF-TOKEN': csrfToken
-                }
+                    "X-XSRF-TOKEN": csrfToken,
+                },
             })
                 .then((res) => res.json())
                 .then((cart) => {

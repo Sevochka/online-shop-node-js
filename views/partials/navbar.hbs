@@ -1,47 +1,95 @@
 {{!-- Для подсвечивания активной вкладки, принимаем буалены из роутов --}}
-<nav>
-  <div class="nav-wrapper">
-    <a href="#" class="brand-logo">Приложение курсов</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-        {{#if isHome}}
-        <li class="active"><a href="/">Главная</a></li>
-        {{else}}
-        <li><a href="/">Главная</a></li>
-        {{/if}}
 
-        {{#if isCourses}}
-        <li class="active"><a href="/courses">Курсы</a></li>
-        {{else}}
-        <li><a href="/courses">Курсы</a></li>
-        {{/if}}
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="/">
+      <img src="https://psv4.userapi.com/c856320/u90822045/docs/d6/17ef13a44346/covid-virus3.png?extra=UPvzbuAjQlMW1JsBOCu2yyCZtroxezTiAYmR4FaYy0x8-PAOK6kXmI8HQe0vCMAUcK__gsHWt6nQHQCvuqMg5yS-f8T-zfkz8ZiJ9de4OFVkJPjWAgaQjlqMIs7_zwRZG-8VNrPvrXsZ7v-oBnfhD9w"
+      style="max-height: none;"
+      width="300px"
+      >
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+      data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      {{#if isHome}}
+        <a class="navbar-item active" href="/">Главная</a>
+      {{else}}
+      <a class="navbar-item" href="/">Главная</a>
+      {{/if}}
+
+      {{#if isCourses}}
+      <a class="navbar-item active" href="/courses">Курсы</a>
+      {{else}}
+      <a class="navbar-item" href="/courses">Курсы</a>
+      {{/if}}
+    
 
       {{#if isAuth}}
-            {{#if isAdd}}
-            <li class="active"><a href="/add">Добавить курс</a></li>
-            {{else}}
-            <li><a href="/add">Добавить курс</a></li>
-            {{/if}}
+          {{#if isAdd}}
+          <a class="navbar-item active" href="/add">Добавить курс</a>
+          {{else}}
+          <a class="navbar-item" href="/add">Добавить курс</a>
+          {{/if}}
 
-            {{#if isCart}}
-            <li class="active"><a href="/cart">Корзина</a></li>
-            {{else}}
-            <li><a href="/cart">Корзина</a></li>
-            {{/if}}
+          {{#if isCart}}
+          <a class="navbar-item active" href="/cart">Корзина</a>
+          {{else}}
+          <a class="navbar-item" href="/cart">Корзина</a>
+          {{/if}}
 
-            {{#if isOrder}}
-            <li class="active"><a href="/orders">Заказы</a></li>
-            {{else}}
-            <li><a href="/orders">Заказы</a></li>
-            {{/if}}
+          {{#if isOrder}}
+          <a class="navbar-item active" href="/orders">Заказы</a>
+          {{else}}
+          <a class="navbar-item" href="/orders">Заказы</a>
+          {{/if}}
+          <div class="navbar-end" style="position: absolute; right:0px">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a style="width: 100px;" class="button is-danger" href="/auth/logout">
+                  Log out
+                </a>
+              </div>
+            </div>
+          </div>
+    {{else}}
 
-            <li><a href="/auth/logout">Выйти</a></li>
-      {{else}}
-        {{#if isLogin}}
-            <li class="active"><a href="/auth/login#login">Войти</a></li>
-            {{else}}
-            <li><a href="/auth/login#login">Войти</a></li>
-            {{/if}}
-      {{/if}}
-    </ul>
+</div>
+    {{#if isLogin}}
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-dark" href="/auth/login">
+            Log in
+          </a>
+          <a class="button is-dark" href="/auth/register">
+            Sign up
+          </a>
+        </div>
+      </div>
+    </div>
+    {{else}}
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-dark" href="/auth/login">
+            Log in
+          </a>
+          <a class="button is-dark" href="/auth/register">
+            Sign up
+          </a>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    {{/if}}
+
   </div>
 </nav>

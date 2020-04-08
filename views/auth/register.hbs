@@ -1,10 +1,21 @@
 <div class="auth">
-    
-    <h1>SignIn Form</h1>
-    {{#if loginError}}
-    <p class="alert">{{loginError}}</p>
+    <h1>SignUp Form</h1>
+
+    {{#if registerError}}
+    <p class="alert">{{registerError}}</p>
     {{/if}}
-    <form action="/auth/login" method="POST">
+
+    <form action="/auth/register" method="POST">
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control has-icons-left">
+                <input name="name" class="input" type="text" placeholder="Username input" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                </span>
+            </div>
+        </div>
+
         <div class="field">
             <label class="label">Email</label>
             <div class="control has-icons-left">
@@ -26,7 +37,6 @@
         </div>
 
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <button class="button is-success" type="submit">Войти</button>
-        
+        <button class="button is-success" type="submit">Зарегистрироваться</button>
     </form>
 </div>

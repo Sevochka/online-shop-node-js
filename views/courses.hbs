@@ -1,33 +1,44 @@
-<h1>Courses</h1>
+<h1 class="isLeft">Courses</h1>
 
 {{#if courses.length}}
-{{#each courses}}
-<div class="row">
-    <div class="col s6 offset-3">
+<div class="columns1">
+    {{#each courses}}
+    <div class="column">
         <div class="card">
             <div class="card-image">
-                <img src="{{img}}" alt="{{title}}">
+                <figure class="image is-4by3">
+                    <img src="{{img}}" alt={{title}}>
+                </figure>
             </div>
             <div class="card-content">
-                <span class="card-title">{{title}}</span>
-                <p class="price">{{price}}</p>
+                    <div class="media-content">
+                        <p class="title is-8">Название: {{title}}</p>
+                        <p class="subtitle is-10">Цена: <span id="price">{{price}}</span></p>
+                    </div>
+                
+                {{!-- <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                    <a href="#">#css</a> <a href="#">#responsive</a>
+                    <br>
+                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                </div> --}}
             </div>
-            <div class="card-action action">
-                <a href="/courses/{{id}}" target="_blank">Открыть курс</a>
-                {{!-- @root - корневой элемент, ибо без него ищет в each --}}
+            <footer class="card-footer">
+                <a class="card-footer-item button is-link is-light" href="/courses/{{id}}" target="_blank">Open</a>
                 {{#if @root.isAuth}}
-                <a href="/courses/{{id}}/edit?allow=true">Редактировать</a>
-                <form action="/cart/add" method="POST">
+                <a class="card-footer-item button is-danger is-light" href="/courses/{{id}}/edit?allow=true">Редактировать</a>
+                <form action="/cart/add" method="POST"></form>
                     <input type="hidden" name="_csrf" value="{{@root.csrfToken}}">
                     <input type="hidden" name="id" value="{{id}}">
-                    <button type="submit" class="btn btn-primary">AddToCart</button>
+                   <button type="submit" class="button is-success is-light">Добавить в корзину</button> 
                 </form>
                 {{/if}}
-            </div>
+            </footer>
         </div>
     </div>
-</div>
-{{/each}}
+    {{/each}}
+{{!-- </div> --}}
 {{else}}
 <p>Курсов пока нет</p>
 {{/if}}
