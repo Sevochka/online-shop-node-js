@@ -6,9 +6,10 @@ const mongoose = require("mongoose");
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const session = require("express-session");
-const varMiddleware = require("./middleware/variables")
-const userMiddleware = require("./middleware/user")
-const MongoStore = require('connect-mongodb-session')(session)
+const varMiddleware = require("./middleware/variables");
+const userMiddleware = require("./middleware/user");
+const MongoStore = require('connect-mongodb-session')(session);
+const keys = require("./keys");
 //Routes
 const homeRoutes = require("./routes/home");
 const coursesRoutes = require("./routes/courses");
@@ -25,12 +26,11 @@ const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-acce
 
 //MongoDB data
 //--Не забыть, что аксес к базе через мой домашнйи айпи!
-const password = "ArNCYAJJdUkzLVMo";
-const uri = `mongodb+srv://sevka:${password}@cluster0-e6cu6.mongodb.net/shop`;
+
 
 const store = new MongoStore({
     collection: 'sessions',
-    uri
+    uri: keys.MONGO_URI
 })
 
 const hbs = exphbs.create({
@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 //Настройка сессий
 app.use(session({
-    secret:'hello, world',
+    secret: keys.SESSION_SECRET,
     resave: false,
     saveUninitialized: false, 
     store
@@ -80,7 +80,7 @@ mongoose.set('useFindAndModify', false);
 //Самовызывающайся асинк функция для работы с промисами
 (async function start() {
     try {
-        await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        await mongoose.connect(keys.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
         
         //ненжуно ибо сессия все решает 
 
