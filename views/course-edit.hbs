@@ -1,4 +1,53 @@
-<h1>Edit course {{course.title}}</h1>
+<div class="container edit">
+    <form action="/courses/edit" method="POST" class="edit-form">
+        <h1 class="mt-3">Edit course {{course.title}}</h1>
+        <div class="field">
+            <label class="label">Название курса</label>
+            <div class="control has-icons-left">
+                <input name="title" value={{course.title}} class="input" type="text"
+                    placeholder="Введите название курса" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-heading"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Цена</label>
+            <p class="control has-icons-left">
+                <input name="price" value={{course.price}} id="price" type="number" class="input"
+                    placeholder="Введите цену" required min="1">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-dollar-sign"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field">
+            <label class="label">URL картинки</label>
+            <p class="control has-icons-left">
+                <input name="img" value={{course.img}} id="img" type="text" class="input" placeholder="Введите url"
+                    required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-image"></i>
+                </span>
+            </p>
+        </div>
+
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <input type="hidden" name="id" value={{course.id}}>
+
+        <button type="submit" class="button is-success">Редактировать</button>
+    </form>
+
+    <form action="/courses/remove" method="POST" class="edit-form">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <input type="hidden" name="id" value="{{ course.id }}">
+        <button type="submit" class="button is-danger">Удалить курс</button>
+    </form>
+</div>
+
+{{!-- <h1>Edit course {{course.title}}</h1>
 
 <form action="/courses/edit" method="POST">
     <div class="row">
@@ -29,4 +78,4 @@
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <input type="hidden" name="id" value="{{ course.id }}">
     <button type="submit" class="btn red">Удалить курс</button>
-</form>
+</form> --}}

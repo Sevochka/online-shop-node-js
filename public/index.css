@@ -90,9 +90,12 @@ h1{
     height: auto;
     border-radius: 0;
 }
-.columns1{
+
+/* Убрать для другого дизайна */
+.column{
     display: inline-block;
 }
+
 .card{
     width: 400px;
     border-radius: 100px 100px 0px 0px;
@@ -111,7 +114,12 @@ h1{
 .isLeft{
     text-align: left;
 }
-
+.mt-3{
+    margin-top: 3rem;
+}
+.edit-form{
+    display: contents;
+}
 /* cart */
 .table-container table{
     margin: auto;
