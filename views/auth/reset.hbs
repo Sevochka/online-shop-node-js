@@ -1,7 +1,7 @@
 <div class="auth">
     <h1>Забыли пароль:</h1>
-    {{#if error}}
-    <p class="alert">{{loginError}}</p>
+    {{#if resetError}}
+        <p class="alert">{{resetError}}</p>
     {{/if}}
     <form action="/auth/reset" method="POST">
         <div class="field">

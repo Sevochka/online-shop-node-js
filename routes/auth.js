@@ -118,7 +118,7 @@ router.post("/register", async (req, res) => {
 router.get('/reset', (req, res) => {
     res.render('auth/reset', {
         title:'Забыли пароль?', 
-        error: req.flash('error')
+        resetError: req.flash('resetError')
     })
 })
 
@@ -141,7 +141,8 @@ router.post('/reset', (req, res) => {
                 await transporter.sendMail(resetEmail(isExist.email, token));
                 res.redirect('/auth/login');
             } else {
-                req.flash('error', "Такого емаил нет")
+                req.flash('resetError', "Такого емаил нет")
+                res.redirect('/auth/reset')
             }
         })
     } catch (error) {

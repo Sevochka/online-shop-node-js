@@ -21,7 +21,7 @@ router.get('/', auth, async (req, res) => {
         price += c.courseId._doc.price * c.current; 
         return {...c.courseId._doc, current: c.current};
     });
-
+    
     res.render('cart', {
         title: "Корзина",
         isCart: true,
