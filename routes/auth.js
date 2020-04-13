@@ -9,7 +9,8 @@ const regEmail = require("../emails/registration")
 const crypto = require('crypto');
 const resetEmail = require("../emails/reset");
 //validation
-const { body, validationResult } = require("express-validator/check")
+const { validationResult } = require('express-validator')
+const { registerValidators } = require("../utils/validators")
 
 const transporter = nodemailer.createTransport(sendgrid({
     auth:{api_key: keys.SENDGRID_API_KEY}
@@ -77,7 +78,7 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.post("/register", body('email').isEmail(), async (req, res) => {
+router.post("/register", registerValidators, async (req, res) => {
     try {
         const {
             email,
@@ -115,7 +116,7 @@ router.post("/register", body('email').isEmail(), async (req, res) => {
             })
             await user.save();
             //Сервис по отпарвке emails
-            await transporter.sendMail(regEmail(email))
+            //await transporter.sendMail(regEmail(email))
             res.redirect('/auth/login');
         }
     } catch (error) {
