@@ -8,6 +8,8 @@ const keys = require('../keys')
 const regEmail = require("../emails/registration")
 const crypto = require('crypto');
 const resetEmail = require("../emails/reset");
+//validation
+const { body, validationResult } = require("express-validator/check")
 
 const transporter = nodemailer.createTransport(sendgrid({
     auth:{api_key: keys.SENDGRID_API_KEY}
@@ -75,18 +77,24 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.post("/register", async (req, res) => {
+router.post("/register", body('email').isEmail(), async (req, res) => {
     try {
         const {
             email,
             password,
-            repeat,
+            confirm,
             name
         } = req.body;
 
         const isExist = await User.findOne({
             email
         })
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            req.flash('registerError', errors.array()[0].msg)
+            return res.status(422).redirect('/auth/register')
+        }
 
         if (isExist) {
             req.flash('registerError', 'Такой email уже занят')

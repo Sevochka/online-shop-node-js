@@ -5,11 +5,11 @@
     <p class="alert">{{registerError}}</p>
     {{/if}}
 
-    <form action="/auth/register" method="POST">
+    <form action="/auth/register" method="POST" novalidate>
         <div class="field">
             <label class="label">Username</label>
             <div class="control has-icons-left">
-                <input name="name" class="input" type="text" placeholder="Username input" required>
+                <input name="name" class="input" type="text" placeholder="Username" required>
                 <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                 </span>
@@ -19,7 +19,7 @@
         <div class="field">
             <label class="label">Email</label>
             <div class="control has-icons-left">
-                <input name="email" class="input" type="email" placeholder="Email input" required>
+                <input name="email" class="input" type="email" placeholder="Email" required>
                 <span class="icon is-small is-left">
                     <i class="fas fa-envelope"></i>
                 </span>
@@ -27,9 +27,19 @@
         </div>
 
         <div class="field">
-            <label class="label">Password</label>
+            <label class="label">Пароль</label>
             <p class="control has-icons-left">
-                <input name="password" class="input" type="password" placeholder="Password" required>
+                <input name="password" class="input" type="password" placeholder="Пароль" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field">
+            <label class="label">Повторите пароль</label>
+            <p class="control has-icons-left">
+                <input name="confirm" class="input" type="password" placeholder="Пароль" required>
                 <span class="icon is-small is-left">
                     <i class="fas fa-lock"></i>
                 </span>
