@@ -1,9 +1,17 @@
-const {
-    Router
-} = require("express");
+const { Router } = require("express");
 const router = Router();
 const User = require("../models/user");
 const encryptor = require('bcryptjs');
+const nodemailer = require('nodemailer');
+const sendgrid = require('nodemailer-sendgrid-transport');
+const keys = require('../keys')
+const regEmail = require("../emails/registration")
+const crypto = require('crypto');
+const resetEmail = require("../emails/reset");
+
+const transporter = nodemailer.createTransport(sendgrid({
+    auth:{api_key: keys.SENDGRID_API_KEY}
+}))
 
 router.get("/login", async (req, res) => {
     res.render("auth/login", {
@@ -98,11 +106,98 @@ router.post("/register", async (req, res) => {
                 }
             })
             await user.save();
-            res.redirect('/auth/login')
+            //Сервис по отпарвке emails
+            await transporter.sendMail(regEmail(email))
+            res.redirect('/auth/login');
         }
     } catch (error) {
         throw error
     }
 });
+
+router.get('/reset', (req, res) => {
+    res.render('auth/reset', {
+        title:'Забыли пароль?', 
+        resetError: req.flash('resetError')
+    })
+})
+
+router.post('/reset', (req, res) => {
+    try {
+        crypto.randomBytes(32, async (err, buffer) => {
+            if (err) {
+                req.flash('error', "Что-то пошло не так, обидно!")
+                return res.redirect('/auth/reset')
+            }
+
+            const token = buffer.toString('hex');
+            const isExist = await User.findOne({email: req.body.email})
+
+            if (isExist) {
+                isExist.resetToken = token;
+                //1 hour
+                isExist.resetTokenExp = Date.now() + 60 * 60 * 1000;
+                await isExist.save();
+                await transporter.sendMail(resetEmail(isExist.email, token));
+                res.redirect('/auth/login');
+            } else {
+                req.flash('resetError', "Такого емаил нет")
+                res.redirect('/auth/reset')
+            }
+        })
+    } catch (error) {
+        throw error
+    }
+})
+
+router.get("/password/:token", async (req, res) => {
+    if (!req.params.token) {
+        return res.redirect('/auth/login')
+    }
+
+    try {
+        const user = await User.findOne({
+            resetToken: req.params.token,
+            resetTokenExp: {$gt: Date.now()}
+        }) 
+
+        if (!user) {
+            return res.redirect('/auth/login');
+        } else {
+            res.render("auth/password", {
+                title: "Восстановить доступ",
+                registerError: req.flash('error'),
+                userId: user._id.toString(),
+                token: req.params.token
+            });
+        }
+    } catch (error) {
+        throw error
+    }
+    
+});
+
+router.post('/password', async (req, res) => {
+    try {
+        const user = await User.findOne({
+            _id: req.body.userId,
+            resetToken: req.body.token,
+            resetTokenExp: {$gt: Date.now()}
+        })
+
+        if (user) {
+            user.password = await encryptor.hash(req.body.password, 10);
+            user.resetToken = undefined;
+            user.resetTokenExp =  undefined;
+            await user.save()
+            res.redirect('/auth/login')
+        } else {
+            req.flash('loginError', "Врямя жизни токеа истекло")
+            res.redirect('/auth/login')
+        }
+    } catch (e) {
+        throw e 
+    }
+})
 
 module.exports = router;

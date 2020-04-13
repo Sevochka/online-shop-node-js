@@ -1,0 +1,20 @@
+<div class="auth">
+    <h1>Забыли пароль:</h1>
+    {{#if resetError}}
+        <p class="alert">{{resetError}}</p>
+    {{/if}}
+    <form action="/auth/reset" method="POST">
+        <div class="field">
+            <label class="label">Email</label>
+            <div class="control has-icons-left">
+                <input name="email" class="input" type="email" placeholder="Email input" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
+            </div>
+
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            
+            <button class="button is-success" type="submit">Сбросить</button>
+    </form>
+</div>
