@@ -61,7 +61,7 @@ if ($cart) {
                                             <th>${c.current}</th>
                                             <th>${c.price}</th>
                                             <th>
-                                                <button class="btn btn-danger remove" data-id="${c._id}" data-csrf="${csrfToken}">Удалить</button>
+                                                <button class="button is-danger remove remove" data-id="${c._id}" data-csrf="${csrfToken}">Удалить</button>
                                             </th>
                                         </tr>
                                         </tbody>
@@ -75,7 +75,7 @@ if ($cart) {
                             "#price"
                         ).innerText = `${toCurrency(price)}`;
                     } else {
-                        $cart.innerHTML = "<p>Корзина пуста</p>";
+                        $cart.innerHTML = "<h1 class='container mt-3'>Корзина пуста</h1>";
                     }
                 });
         }

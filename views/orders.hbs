@@ -5,13 +5,14 @@
     <div class="row">
         <div class="col s6 offset-s3">
             <div class="card">
-                <div class="card-content">
+                <div class="card-content" style="text-align: center;">
                     <spam class="cart-title">
                         Заказ #{{_id}}
                     </spam>
                     <p class="date">Дата: {{date}}</p>
-                    <p>name: {{user.userId.name}}</p>
-                    <p>email: {{user.userId.email}}</p>
+                    <p>Имя: {{user.userId.name}}</p>
+                    <p>Email: {{user.userId.email}}</p>
+                    <hr>
                     <ol>
                         {{#each courses}}
                         <li>
@@ -20,7 +21,6 @@
                         {{/each}}
                     </ol>
                     <h1><span id="price">{{price}}</span></h1>
-
                 </div>
             </div>
         </div>

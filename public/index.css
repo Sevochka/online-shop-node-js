@@ -96,19 +96,22 @@ h1{
     display: inline-block;
 }
 
-.card{
+.column .card{
     width: 400px;
     border-radius: 100px 100px 0px 0px;
 }
-.card img {
+.column .card img {
     border-radius: 100px 100px 0px 0px;
 }
-.card-footer{
+.column .card-footer{
     border-radius: 100px 100px 0px 0px;
 }
-.card-footer button{
+.column .card-footer button{
     height: auto;
     border-radius: 0;
+}
+.column .card-footer form{
+    display: contents;
 }
 
 .isLeft{

@@ -188,7 +188,7 @@ router.post("/password", async (req, res) => {
             await user.save();
             res.redirect("/auth/login");
         } else {
-            req.flash("loginError", "Врямя жизни токеа истекло");
+            req.flash("loginError", "Врямя жизни токена истекло");
             res.redirect("/auth/login");
         }
     } catch (e) {

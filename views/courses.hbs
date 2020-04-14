@@ -32,10 +32,10 @@
                 {{#ifeq userId._id @root.userId}}
                 <a class="card-footer-item button is-danger is-light" href="/courses/{{id}}/edit?allow=true">Редактировать</a>
                 {{/ifeq}}
-                <form action="/cart/add" method="POST"></form>
+                <form action="/cart/add" method="POST">
                     <input type="hidden" name="_csrf" value="{{@root.csrfToken}}">
                     <input type="hidden" name="id" value="{{id}}">
-                   <button type="submit" class="card-footer-item button is-success is-light">Добавить в корзину</button> 
+                   <button class="card-footer-item button is-success is-light">Добавить в корзину</button> 
                 </form>
                 {{/if}}
             </footer>
