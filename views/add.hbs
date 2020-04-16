@@ -1,37 +1,42 @@
-<form action="/add" method="POST" class="container edit">
-  <h1 class="isLeft">Добавление нового курса</h1>
-  <div class="field">
-    <label class="label">Название курса</label>
-    <div class="control has-icons-left">
-      <input name="title" class="input" type="text" placeholder="Введите название курса" required>
-      <span class="icon is-small is-left">
-        <i class="fas fa-heading"></i>
-      </span>
+<div class="container edit">
+  {{#if error}}
+  <p class="alert"> {{error}}</p>
+  {{/if}}
+  <form action="/add" method="POST">
+    <h1 class="isLeft">Добавление нового курса</h1>
+    <div class="field">
+      <label class="label">Название курса</label>
+      <div class="control has-icons-left">
+        <input name="title" class="input" type="text" placeholder="Введите название курса" required value="{{data.title}}">
+        <span class="icon is-small is-left">
+          <i class="fas fa-heading"></i>
+        </span>
+      </div>
     </div>
-  </div>
 
-  <div class="field">
-    <label class="label">Цена</label>
-    <p class="control has-icons-left">
-      <input name="price" id="price" type="number" class="input" placeholder="Введите цену" required min="1">
-      <span class="icon is-small is-left">
-        <i class="fas fa-dollar-sign"></i>
-      </span>
-    </p>
-  </div>
+    <div class="field">
+      <label class="label">Цена</label>
+      <p class="control has-icons-left">
+        <input name="price" id="price" type="number" class="input" placeholder="Введите цену" required min="1" value="{{data.price}}">
+        <span class="icon is-small is-left">
+          <i class="fas fa-dollar-sign"></i>
+        </span>
+      </p>
+    </div>
 
-  <div class="field">
-    <label class="label">URL картинки</label>
-    <p class="control has-icons-left">
-      <input name="img" id="img" type="text" class="input" placeholder="Введите url" required>
-      <span class="icon is-small is-left">
-        <i class="fas fa-image"></i>
-      </span>
-    </p>
-  </div>
+    <div class="field">
+      <label class="label">URL картинки</label>
+      <p class="control has-icons-left">
+        <input name="img" id="img" type="text" class="input" placeholder="Введите url" required value="{{data.img}}">
+        <span class="icon is-small is-left">
+          <i class="fas fa-image"></i>
+        </span>
+      </p>
+    </div>
 
-  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-  <button type="submit" class="button is-success">Добавить курс</button>
-  
-</form>
+    <button type="submit" class="button is-success">Добавить курс</button>
+
+  </form>
+</div>
