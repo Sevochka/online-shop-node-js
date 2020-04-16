@@ -6,8 +6,11 @@ const mongoose = require("mongoose");
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const session = require("express-session");
+//Middlewares
 const varMiddleware = require("./middleware/variables");
 const userMiddleware = require("./middleware/user");
+const errorHandler = require('./middleware/error')//404
+//MongoDB
 const MongoStore = require('connect-mongodb-session')(session);
 const keys = require("./keys");
 //Routes
@@ -69,6 +72,7 @@ app.use("/cart", cartRoutes);
 app.use("/orders", ordersRoutes);
 app.use('/auth', authRoutes)
 
+app.use(errorHandler)
 const PORT = process.env.PORT || 3000;
 
 
