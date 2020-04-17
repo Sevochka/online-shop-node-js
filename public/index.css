@@ -128,3 +128,12 @@ h1{
     margin: auto;
     width: 100%;
 }
+
+/*profile*/
+.avatar{
+    max-width: 300px;
+    height: auto;
+}
+.main-avatar{
+    text-align: center;
+}
