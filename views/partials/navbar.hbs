@@ -3,10 +3,7 @@
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img src="/logo.png"
-      style="max-height: none;"
-      width="300px"
-      >
+      <img src="/logo.png" style="max-height: none;" width="300px">
     </a>
 
     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
@@ -20,7 +17,7 @@
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
       {{#if isHome}}
-        <a class="navbar-item active" href="/">Главная</a>
+      <a class="navbar-item active" href="/">Главная</a>
       {{else}}
       <a class="navbar-item" href="/">Главная</a>
       {{/if}}
@@ -30,38 +27,44 @@
       {{else}}
       <a class="navbar-item" href="/courses">Курсы</a>
       {{/if}}
-    
+
 
       {{#if isAuth}}
-          {{#if isAdd}}
-          <a class="navbar-item active" href="/add">Добавить курс</a>
-          {{else}}
-          <a class="navbar-item" href="/add">Добавить курс</a>
-          {{/if}}
+      {{#if isAdd}}
+      <a class="navbar-item active" href="/add">Добавить курс</a>
+      {{else}}
+      <a class="navbar-item" href="/add">Добавить курс</a>
+      {{/if}}
 
-          {{#if isCart}}
-          <a class="navbar-item active" href="/cart">Корзина</a>
-          {{else}}
-          <a class="navbar-item" href="/cart">Корзина</a>
-          {{/if}}
+      {{#if isAdd}}
+      <a class="navbar-item active" href="/profile">Профиль</a>
+      {{else}}
+      <a class="navbar-item" href="/profile">Профиль</a>
+      {{/if}}
 
-          {{#if isOrder}}
-          <a class="navbar-item active" href="/orders">Заказы</a>
-          {{else}}
-          <a class="navbar-item" href="/orders">Заказы</a>
-          {{/if}}
-          <div class="navbar-end" style="position: absolute; right:0px">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a style="width: 100px;" class="button is-danger" href="/auth/logout">
-                  Log out
-                </a>
-              </div>
-            </div>
+      {{#if isCart}}
+      <a class="navbar-item active" href="/cart">Корзина</a>
+      {{else}}
+      <a class="navbar-item" href="/cart">Корзина</a>
+      {{/if}}
+
+      {{#if isOrder}}
+      <a class="navbar-item active" href="/orders">Заказы</a>
+      {{else}}
+      <a class="navbar-item" href="/orders">Заказы</a>
+      {{/if}}
+      <div class="navbar-end" style="position: absolute; right:0px">
+        <div class="navbar-item">
+          <div class="buttons">
+            <a style="width: 100px;" class="button is-danger" href="/auth/logout">
+              Log out
+            </a>
           </div>
-    {{else}}
+        </div>
+      </div>
+      {{else}}
 
-</div>
+    </div>
     {{#if isLogin}}
     <div class="navbar-end">
       <div class="navbar-item">

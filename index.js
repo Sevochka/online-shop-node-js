@@ -6,8 +6,11 @@ const mongoose = require("mongoose");
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const session = require("express-session");
+//Middlewares
 const varMiddleware = require("./middleware/variables");
 const userMiddleware = require("./middleware/user");
+const errorHandler = require('./middleware/error')//404
+//MongoDB
 const MongoStore = require('connect-mongodb-session')(session);
 const keys = require("./keys");
 //Routes
@@ -17,6 +20,7 @@ const addRoutes = require("./routes/add");
 const cartRoutes = require("./routes/cart");
 const ordersRoutes = require("./routes/orders");
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 
 //Непонятный код со стак оферфлоу, который каким-то чудесным образом
 //решил проблему
@@ -68,7 +72,9 @@ app.use("/add", addRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", ordersRoutes);
 app.use('/auth', authRoutes)
+app.use('/profile', profileRoutes)
 
+app.use(errorHandler)
 const PORT = process.env.PORT || 3000;
 
 
