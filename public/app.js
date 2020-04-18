@@ -1,5 +1,3 @@
-
-
 const toCurrency = (price) => {
     return new Intl.NumberFormat("ru-RU", {
         currency: "rub",
@@ -12,10 +10,6 @@ document.querySelectorAll("#price").forEach((node) => {
 });
 
 ////
-
-
-
-
 
 ////
 
@@ -61,7 +55,12 @@ if ($cart) {
                                             <th>${c.current}</th>
                                             <th>${c.price}</th>
                                             <th>
-                                                <button class="button is-danger remove remove" data-id="${c._id}" data-csrf="${csrfToken}">Удалить</button>
+                                                <button class="button is-danger remove remove" data-id="${c._id}" data-csrf="${csrfToken}">
+                                                    Удалить
+                                                </button>
+                                                <button class="button is-primary add" type="submit" data-id="${c._id}" data-csrf="${csrfToken}">
+                                                    Добавить
+                                                </button>
                                             </th>
                                         </tr>
                                         </tbody>
@@ -75,7 +74,58 @@ if ($cart) {
                             "#price"
                         ).innerText = `${toCurrency(price)}`;
                     } else {
-                        $cart.innerHTML = "<h1 class='container mt-3'>Корзина пуста</h1>";
+                        $cart.innerHTML =
+                            "<h1 class='container mt-3'>Корзина пуста</h1>";
+                    }
+                });
+        }
+    });
+
+    $cart.addEventListener("click", (event) => {
+        if (event.target.classList.contains("add")) {
+            const id = event.target.dataset.id;
+            const csrfToken = event.target.dataset.csrf;
+            fetch("/cart/add/" + id, {
+                method: "post",
+                headers: {
+                    "X-XSRF-TOKEN": csrfToken,
+                },
+            })
+                .then((res) => res.json())
+                .then((cart) => {
+                    if (cart.courses.length) {
+                        let price = 0;
+                        const HTML = cart.courses
+                            .map((c) => {
+                                price += +c.price * +c.current;
+                                return `
+                                        <tbody>
+                                        <tr>
+                                            <th>${c.title}</th>
+                                            <th>${c.current}</th>
+                                            <th>${c.price}</th>
+                                            <th>
+                                                <button class="button is-danger remove remove" data-id="${c._id}" data-csrf="${csrfToken}">
+                                                    Удалить
+                                                </button>
+                                                <button class="button is-primary add" type="submit" data-id="${c._id}" data-csrf="${csrfToken}">
+                                                    Добавить
+                                                </button>
+                                            </th>
+                                        </tr>
+                                        </tbody>
+                                        `;
+                            })
+                            .join("");
+
+                        console.log(price);
+                        document.querySelector("tbody").innerHTML = HTML;
+                        document.querySelector(
+                            "#price"
+                        ).innerText = `${toCurrency(price)}`;
+                    } else {
+                        $cart.innerHTML =
+                            "<h1 class='container mt-3'>Корзина пуста</h1>";
                     }
                 });
         }

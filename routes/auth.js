@@ -93,8 +93,7 @@ router.post("/register", registerValidators, async (req, res) => {
         //Шифратор паролей, второй параметр - точность шифратора - чем больше, тем круче шифрование
         //но дольше времени занимает
         const hashPassword = await encryptor.hash(password, 10);
-        console.log(hashPassword);
-
+        
         const user = new User({
             email,
             name,
@@ -105,7 +104,7 @@ router.post("/register", registerValidators, async (req, res) => {
         });
         await user.save();
         //Сервис по отпарвке emails
-        //await transporter.sendMail(regEmail(email))
+        await transporter.sendMail(regEmail(email))
         res.redirect("/auth/login");
     } catch (error) {
         throw error;

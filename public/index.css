@@ -128,3 +128,8 @@ h1{
     margin: auto;
     width: 100%;
 }
+
+.row {
+    display: inline-block;
+    margin-left: 10px;
+}

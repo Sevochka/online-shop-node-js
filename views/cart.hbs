@@ -8,7 +8,7 @@
                     <th>Наименование</th>
                     <th>Количество</th>
                     <th>Цена</th>
-                    <th>Действие</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -21,6 +21,10 @@
                         <button class="button is-danger remove" type="submit" data-id="{{_id}}"
                             data-csrf="{{@root.csrfToken}}">
                             Удалить
+                        </button>
+                        <button class="button is-primary add" type="submit" data-id="{{_id}}"
+                            data-csrf="{{@root.csrfToken}}">
+                            Добавить
                         </button>
                     </th>
                 </tr>

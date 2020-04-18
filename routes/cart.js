@@ -9,6 +9,25 @@ router.post('/add', auth, async (req, res)=> {
     res.redirect('/cart')
 })
 
+router.post('/add/:id', auth, async (req, res)=> {
+    const course = await Courses.findById(req.params.id);
+    await req.user.addToCart(course)
+    const user = await req.user
+        .populate('cart.items.courseId')
+        .execPopulate();
+    
+    let price;
+    const courses = user.cart.items.map(c => {
+        price += c.courseId._doc.price * c.current; 
+        return {...c.courseId._doc, current: c.current};
+    });
+    const cart = {
+        courses
+    }
+    
+    res.status(200).json(cart)
+})
+
 router.get('/', auth, async (req, res) => {
     //Заполнение 
     const user = await req.user
