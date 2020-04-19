@@ -10,6 +10,7 @@ const session = require("express-session");
 const varMiddleware = require("./middleware/variables");
 const userMiddleware = require("./middleware/user");
 const errorHandler = require('./middleware/error')//404
+const fileMiddleWare = require("./middleware/file")
 //MongoDB
 const MongoStore = require('connect-mongodb-session')(session);
 const keys = require("./keys");
@@ -31,7 +32,6 @@ const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-acce
 //MongoDB data
 //--Не забыть, что аксес к базе через мой домашнйи айпи!
 
-
 const store = new MongoStore({
     collection: 'sessions',
     uri: keys.MONGO_URI
@@ -49,6 +49,7 @@ app.set("view engine", "hbs");
 app.set("views", "views");
 //Объявить папку public статичной
 app.use(express.static(path.join(__dirname, "public")));
+app.use('/images', express.static(path.join(__dirname, 'images')))
 //Получить req.body
 app.use(express.urlencoded({ extended: true }));
 //Настройка сессий
@@ -63,16 +64,19 @@ app.use(csrf());
 //
 app.use(flash());
 //midlewares
+app.use(fileMiddleWare.single('avatar'));
 app.use(varMiddleware);
 app.use(userMiddleware);
+
 //Добавляем роуты
 app.use("/", homeRoutes);
 app.use("/courses", coursesRoutes);
+app.use('/profile', profileRoutes)
 app.use("/add", addRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", ordersRoutes);
 app.use('/auth', authRoutes)
-app.use('/profile', profileRoutes)
+
 
 app.use(errorHandler)
 const PORT = process.env.PORT || 3000;
@@ -88,19 +92,6 @@ mongoose.set('useFindAndModify', false);
 (async function start() {
     try {
         await mongoose.connect(keys.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-        
-        //ненжуно ибо сессия все решает 
-
-        // const candidate = await User.findOne();
-        // if (!candidate) {
-        //     const user = new User({
-        //         email: 'test',
-        //         name: 'Seva',
-        //         cart: {items: []}
-        //     })
-        //     await user.save()
-        // }
-
         app.listen(PORT, () => {
             console.log(`Server is running on http://localhost:${PORT}`);
         });

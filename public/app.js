@@ -132,3 +132,8 @@ if ($cart) {
     });
 } else {
 }
+
+document.querySelector('.file-input').addEventListener('change', (event) => {
+    console.log(event.target.files[0].name);
+    document.querySelector('.file-name').innerText = event.target.files[0].name;
+})

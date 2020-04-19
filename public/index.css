@@ -133,12 +133,22 @@ h1{
 .avatar{
     max-width: 300px;
     height: auto;
+    border-radius: 15px;
 }
 .main-avatar{
     text-align: center;
 }
-
 .row {
-    display: inline-block;
+    display: flex;
     margin-left: 10px;
+}
+.row form{
+    margin: 0px 10px 10px 10px;
+}
+.row .file{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.row .file-name{
+    width: 200px;
 }
