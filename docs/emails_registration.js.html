@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: emails/registration.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,37 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: emails/registration.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const keys = require('../keys')
+/**
+ * Возвращает объект-конфигурации для отправки email об успешной регистрации.
+ * @param {string} to - Электронный адрес назначения.
+ * @return {object} - Готовая для использования конфигурация для SendMail.
+ */
+module.exports = function (to) {
+    return {
+        to,
+        from: keys.EMAIL_FROM,
+        subject: "Аккаунт создан",
+        html: `
+            &lt;h1>Добро подаловать в наш магазин&lt;/h1>
+            &lt;p>Вы успешно создали аккаунт с email - ${to}&lt;/p>
+            &lt;hr/>
+            &lt;a href="${keys.BASE_URL}">Магазин курсов&lt;/a>
+        `,
+    };
+};
+</code></pre>
+        </article>
+    </section>
 
 
 

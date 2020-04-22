@@ -3,6 +3,9 @@ const router = Router();
 const Order = require("../models/order");
 const auth = require("../middleware/auth")
 
+/**
+ * Отображение страницы заказов пользователя
+ */
 router.get("/", auth, async (req, res) => {
     try {
         const mainInfo = await Order.find({
@@ -30,6 +33,9 @@ router.get("/", auth, async (req, res) => {
     }
 });
 
+/**
+ * Добавлени заказа пользователя
+ */
 router.post("/", auth, async (req, res) => {
     try {
         const user = await req.user
