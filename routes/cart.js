@@ -2,13 +2,17 @@ const {Router} = require('express');
 const Courses =  require("../models/course")
 const router = Router();
 const auth = require("../middleware/auth")
-
+/**
+ * Добавление нового курса в корзину
+ */
 router.post('/add', auth, async (req, res)=> {
     const course = await Courses.findById(req.body.id);
     await req.user.addToCart(course)
     res.redirect('/cart')
 })
-
+/**
+ * Добавление нового курса в корзину
+ */
 router.post('/add/:id', auth, async (req, res)=> {
     const course = await Courses.findById(req.params.id);
     await req.user.addToCart(course)
@@ -28,6 +32,9 @@ router.post('/add/:id', auth, async (req, res)=> {
     res.status(200).json(cart)
 })
 
+/**
+ * Отображение страницы "Корзина"
+ */
 router.get('/', auth, async (req, res) => {
     //Заполнение 
     const user = await req.user
@@ -48,6 +55,10 @@ router.get('/', auth, async (req, res) => {
         price
     }); 
 })
+
+/**
+ * Удаление курса
+ */
 
 router.delete('/remove/:id', auth, async (req, res)=> {
 

@@ -12,12 +12,18 @@ const resetEmail = require("../emails/reset");
 const { validationResult } = require("express-validator");
 const { registerValidators } = require("../utils/validators");
 
+/**
+ * Создание основного транспорта в Nodemailer для доставки сообщений.
+ */
 const transporter = nodemailer.createTransport(
     sendgrid({
         auth: { api_key: keys.SENDGRID_API_KEY },
     })
 );
 
+/**
+ * Роут, производящий рендер страницы авторизации
+ */
 router.get("/login", async (req, res) => {
     res.render("auth/login", {
         title: "Авторизация",
@@ -26,6 +32,9 @@ router.get("/login", async (req, res) => {
     });
 });
 
+/**
+ * Роут, производящий рендер страницы регистрации
+ */
 router.get("/register", async (req, res) => {
     res.render("auth/register", {
         title: "Регистрация",
@@ -33,18 +42,23 @@ router.get("/register", async (req, res) => {
         registerError: req.flash("registerError"),
     });
 });
-
+/**
+ * Роут, производящий разрушение ткущей сессии и перенаправление на страницы авторизации
+ */
 router.get("/logout", async (req, res) => {
     //req.session.isAuthenticated = false;
     req.session.destroy(() => {
         res.redirect("/auth/login");
     });
 });
-
+/**
+ * Роутер для авторизации пользователя
+ * @param {string} email - Электронный адрес пользователя
+ * @param {string} password - Пароль пользователя
+ */
 router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
-
         const candidate = await User.findOne({
             email,
         });
@@ -79,7 +93,12 @@ router.post("/login", async (req, res) => {
         throw error;
     }
 });
-
+/**
+ * Роутер для регистрации пользователя
+ * @param {string} email - Электронный адрес пользователя
+ * @param {string} password - Пароль пользователя
+ * @param {string} name - Имя пользователя
+ */
 router.post("/register", registerValidators, async (req, res) => {
     try {
         const { email, password, name } = req.body;
@@ -110,7 +129,9 @@ router.post("/register", registerValidators, async (req, res) => {
         throw error;
     }
 });
-
+/**
+ * Роутер для отображения страницы "Забыли пароль?"
+ */
 router.get("/reset", (req, res) => {
     res.render("auth/reset", {
         title: "Забыли пароль?",
@@ -118,6 +139,9 @@ router.get("/reset", (req, res) => {
     });
 });
 
+/**
+ * Роутер для восстановления пароля пользователя, генерирует токен и заносит его в БД
+ */
 router.post("/reset", (req, res) => {
     try {
         crypto.randomBytes(32, async (err, buffer) => {
@@ -146,6 +170,9 @@ router.post("/reset", (req, res) => {
     }
 });
 
+/**
+ * Роутер для отображения страницы изменения пароля
+ */
 router.get("/password/:token", async (req, res) => {
     if (!req.params.token) {
         return res.redirect("/auth/login");
@@ -171,6 +198,12 @@ router.get("/password/:token", async (req, res) => {
         throw error;
     }
 });
+
+/**
+ * Роутер, принимающий новый пароль и изменяющий его в БД
+ * @param {string} password - Пароль
+ * @param {string} resetToken - Токен дял восстановления пароля
+ */
 
 router.post("/password", async (req, res) => {
     try {

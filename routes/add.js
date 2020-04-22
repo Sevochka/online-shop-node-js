@@ -18,10 +18,11 @@ router.get("/", auth, (req, res) => {
     });
 });
 
+/**
+ * Роут добавления нового курса 
+ */
 router.post('/', auth, courseValidators, async (req, res) => {
-
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
         return res.status(422).render('add', {
             title: "Добавить курс",

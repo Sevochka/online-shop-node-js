@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "doc": "jsdoc -c jsdoc.json"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "uuid": "^7.0.2"
   },
   "devDependencies": {
+    "jsdoc": "^3.6.4",
     "nodemon": "^2.0.2"
   }
 }

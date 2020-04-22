@@ -1,5 +1,12 @@
 const {Schema, model} = require('mongoose');
 
+/**
+ * Заказ
+ * @typedef {Object} Order
+ * @property {Array} courses - Добавленные курсы
+ * @property {Object} user - Пользователеть-владелец
+ * @property {Date} date - Дата создания заказа
+ */
 const orderSchema = new Schema({
     courses: [
         {

@@ -1,5 +1,9 @@
 const keys = require('../keys')
-
+/**
+ * Возвращает объект-конфигурации для отправки email об успешной регистрации.
+ * @param {string} to - Электронный адрес назначения.
+ * @return {object} - Готовая для использования конфигурация для SendMail.
+ */
 module.exports = function (to) {
     return {
         to,

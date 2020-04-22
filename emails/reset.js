@@ -1,4 +1,10 @@
 const keys = require('../keys')
+/**
+ * Возвращает объект-конфигурации для отправки email при восстановлении пароля
+ * @param {string} to - Электронный адрес назначения.
+ * @param {string} token - Заранее созданный resetToken, по которому происходит восстановление пароля.
+ * @return {object} - Готовая для использования конфигурация для SendMail.
+ */
 
 module.exports = function (to, token) {
     return {
