@@ -152,3 +152,8 @@ h1{
 .row .file-name{
     width: 200px;
 }
+
+/* order */
+.card-orders{
+    margin-left: 20px;
+}

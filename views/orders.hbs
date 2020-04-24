@@ -1,31 +1,32 @@
 <h1>Заказы:</h1>
 
 {{#if orders.length}}
+<div class="row">
     {{#each orders}}
-    <div class="row">
-        <div class="col s6 offset-s3">
-            <div class="card card-orders">
-                <div class="card-content" style="text-align: center;">
-                    <spam class="cart-title">
-                        Заказ #{{_id}}
-                    </spam>
-                    <p class="date">Дата: {{date}}</p>
-                    <p>Имя: {{user.userId.name}}</p>
-                    <p>Email: {{user.userId.email}}</p>
-                    <hr>
-                    <ol>
-                        {{#each courses}}
-                        <li>
-                            {{course.title}} - {{course.price}}
-                        </li>
-                        {{/each}}
-                    </ol>
-                    <h1><span id="price">{{price}}</span></h1>
-                </div>
+    <div class="col s6 offset-s3">
+        <div class="card card-orders">
+            <div class="card-content" style="text-align: center;">
+                <spam class="cart-title">
+                    Заказ #{{_id}}
+                </spam>
+                <p class="date">Дата: {{date}}</p>
+                <p>Имя: {{user.userId.name}}</p>
+                <p>Email: {{user.userId.email}}</p>
+                <hr>
+                <ol>
+                    {{#each courses}}
+                    <li>
+                        {{course.title}} - {{course.price}}
+                    </li>
+                    {{/each}}
+                </ol>
+                <h1><span id="price">{{price}}</span></h1>
             </div>
         </div>
     </div>
+
     {{/each}}
+</div>
 {{else}}
 <h1>Заказов нет</h1>
 {{/if}}
