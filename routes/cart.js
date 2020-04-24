@@ -12,6 +12,7 @@ router.post('/add', auth, async (req, res)=> {
 })
 /**
  * Добавление нового курса в корзину
+ * @param {string} id - уникальный идентификатор курса
  */
 router.post('/add/:id', auth, async (req, res)=> {
     const course = await Courses.findById(req.params.id);
@@ -58,10 +59,10 @@ router.get('/', auth, async (req, res) => {
 
 /**
  * Удаление курса
+ * @param {string} id - уникальный идентификатор курса
  */
 
 router.delete('/remove/:id', auth, async (req, res)=> {
-
     await req.user.removeFromCart(req.params.id);
     const user = await req.user
         .populate('cart.items.courseId')

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: models/order.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,54 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: models/order.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const {Schema, model} = require('mongoose');
 
+/**
+ * Заказ
+ * @typedef {Object} Order
+ * @property {Array} courses - Добавленные курсы
+ * @property {Object} user - Пользователеть-владелец
+ * @property {Date} date - Дата создания заказа
+ */
+const orderSchema = new Schema({
+    courses: [
+        {
+            course: {
+                type: Object,
+                required: true
+            },
+            current: {
+                type: Number,
+                required: true
+            }
+        }
+    ],
+    user:{
+        name: String,
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        }
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+module.exports = model("Order", orderSchema);</code></pre>
+        </article>
+    </section>
 
 
 

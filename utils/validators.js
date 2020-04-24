@@ -1,6 +1,8 @@
 const { body } = require("express-validator");
 const User = require("../models/user");
-
+/**
+ * Валидация полей регистрации
+ */
 exports.registerValidators = [
     body("email")
         .isEmail()
@@ -33,7 +35,9 @@ exports.registerValidators = [
         .withMessage("Имя должно быть минимум 3 символа")
         .trim(),
 ];
-
+/**
+ * Валидация полей курсов
+ */
 exports.courseValidators = [
     body('title').isLength({min: 3}).withMessage('Минимальная длина названия 3 символа').trim(),
     body('price').isNumeric().withMessage('Введите корректную цену'),

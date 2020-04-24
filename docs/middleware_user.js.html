@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: middleware/user.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,31 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: middleware/user.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const User = require('../models/user')
 
+/**
+ * Превращение session.user в модель user mongodb, чтобы populate можно было делать
+ */
+module.exports = async function(req, res, next) {
+    //Если нет пользователя, то вернуться
+    if (!req.session.user) {
+        return next()
+    }
 
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+    req.user = await User.findById(req.session.user._id);
+    next()
+}</code></pre>
+        </article>
+    </section>
 
 
 

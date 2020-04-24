@@ -3,6 +3,9 @@ const router = Router();
 const auth = require('../middleware/auth');
 const User = require('../models/user')
 
+/**
+ * Отображение страницы профиля
+ */
 router.get('/', auth, async (req, res) => {
     res.render('profile', {
         title: 'Профиль',
@@ -11,6 +14,11 @@ router.get('/', auth, async (req, res) => {
     })
 })
 
+/**
+ * Изменения данных пользователя
+ * @param {string} name - Имя пользователя
+ * @param {media} file - Загружаемое изображение
+ */
 router.post('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user._id);

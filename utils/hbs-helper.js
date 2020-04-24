@@ -1,3 +1,7 @@
+/**
+ *  Добавления обработчика сравнения чисел в handlebars
+ */
+
 module.exports = {
     ifeq(a, b, options){
         if (a == b) {
