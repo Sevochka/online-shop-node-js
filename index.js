@@ -7,6 +7,7 @@ const csrf = require('csurf');
 const flash = require('connect-flash');
 const session = require("express-session");
 const helmet = require('helmet');
+const compression = require('compression');
 //Middlewares
 const varMiddleware = require("./middleware/variables");
 const userMiddleware = require("./middleware/user");
@@ -65,6 +66,7 @@ app.use(csrf());
 //
 app.use(flash());
 app.use(helmet());
+
 //midlewares
 app.use(fileMiddleWare.single('avatar'));
 app.use(varMiddleware);
