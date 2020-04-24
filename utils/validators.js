@@ -20,7 +20,6 @@ exports.registerValidators = [
         .normalizeEmail(),
     body("password", "Пароль должен быть минимум 6 символов")
         .isLength({ min: 6, max: 56 })
-        .isAlphanumeric()
         .trim(),
     body("confirm")
         .custom((value, { req }) => {
@@ -40,6 +39,7 @@ exports.registerValidators = [
  */
 exports.courseValidators = [
     body('title').isLength({min: 3}).withMessage('Минимальная длина названия 3 символа').trim(),
+    body('title').isLength({min: 50}).withMessage('Максимальная длина названия 50 символов').trim(),
     body('price').isNumeric().withMessage('Введите корректную цену'),
     body('img', 'Введите корректный url').isURL()
 ]
