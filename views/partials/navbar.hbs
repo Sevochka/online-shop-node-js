@@ -16,18 +16,11 @@
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      {{#if isHome}}
-      <a class="navbar-item active" href="/">Главная</a>
-      {{else}}
-      <a class="navbar-item" href="/">Главная</a>
-      {{/if}}
-
       {{#if isCourses}}
-      <a class="navbar-item active" href="/courses">Курсы</a>
+      <a class="navbar-item active" href="/courses">Главная</a>
       {{else}}
-      <a class="navbar-item" href="/courses">Курсы</a>
+      <a class="navbar-item" href="/courses">Главная</a>
       {{/if}}
-
 
       {{#if isAuth}}
       {{#if isAdd}}
