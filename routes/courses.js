@@ -24,6 +24,7 @@ router.get("/", async (req, res) => {
             .populate("userId", "email name")
             .select("price title img");
 
+        
         res.render("courses", {
             title: "Курсы",
             isCourses: true,
