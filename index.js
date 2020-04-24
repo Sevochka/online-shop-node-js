@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const session = require("express-session");
+const helmet = require('helmet');
 //Middlewares
 const varMiddleware = require("./middleware/variables");
 const userMiddleware = require("./middleware/user");
@@ -63,6 +64,7 @@ app.use(session({
 app.use(csrf());
 //
 app.use(flash());
+app.use(helmet());
 //midlewares
 app.use(fileMiddleWare.single('avatar'));
 app.use(varMiddleware);
@@ -80,7 +82,6 @@ app.use('/auth', authRoutes)
 
 app.use(errorHandler)
 const PORT = process.env.PORT || 3000;
-
 
 //Исправляет ошибку при edit курса
 //DOCS: 'useFindAndModify': true by default. 
