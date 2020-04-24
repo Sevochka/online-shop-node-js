@@ -36,6 +36,7 @@ router.get("/login", async (req, res) => {
  * Роут, производящий рендер страницы регистрации
  */
 router.get("/register", async (req, res) => {
+    
     res.render("auth/register", {
         title: "Регистрация",
         isRegister: true,
