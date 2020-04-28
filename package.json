@@ -4,8 +4,7 @@
   "description": "Smth",
   "main": "index.js",
   "jest": {
-    "testEnvironment": "node",
-    "preset": "@shelf/jest-mongodb"
+    "testEnvironment": "node"
   },
   "scripts": {
     "start": "node index.js",
@@ -36,7 +35,6 @@
   "devDependencies": {
     "jest": "^25.4.0",
     "jsdoc": "^3.6.4",
-    "nodemon": "^2.0.2",
-    "@shelf/jest-mongodb": "^1.1.5"
+    "nodemon": "^2.0.2"
   }
 }

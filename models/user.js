@@ -68,7 +68,6 @@ userSchema.methods.addToCart = function(course) {
     const cart = {items}
     this.cart = cart
     return this.save()
-
 }
 /**
  * Метод удаления товара из корзины
