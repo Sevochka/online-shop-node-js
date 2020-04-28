@@ -47,13 +47,24 @@ describe("Users", () => {
         expect(user.cart.items[0].courseId).toStrictEqual(courseId);
     });
 
-    test("Should add course to cart several times ", async () => {
+    test("Should add course to cart several times", async () => {
         let user = await User.findOne({email:'vsevoiodkochnev@mail.ru'});
-        let course = await Course.findOne({title:"Angular"});
+        let course = await Course.findOne({title:"React"});
         let courseId = course._id;
         await user.addToCart(course);
-        expect(user.cart.items[0].courseId).toStrictEqual(courseId);
+        let amount = user.cart.items[1].current;
+        expect(user.cart.items[1].current).toBe(amount);
+        amount = user.cart.items[1].current;
+        await user.addToCart(course);
+        expect(user.cart.items[1].current).toBe(amount+1);
     });
+
+    test("Should clear user cart", async () => {
+        let user = await User.findOne({email:'vsevoiodkochnev@mail.ru'});
+        await user.clearCart();
+        expect(user.cart.items[0]).toBeUndefined();
+    });
+
 });
 
 describe("Course", () => {
@@ -78,13 +89,11 @@ describe("Course", () => {
         expect(insertedCourse).toHaveProperty('img', mockCourse.img);
     });
 
-    test("Should delete a existing course", async () => { 
-        const ownerUser = await User.findOne({email:'vsevoiodkochnev@mail.ru'}); 
+    test("Should delete an existing course", async () => { 
         const mockCourse = { 
             title: 'testCourse', 
             price:'1232233', 
-            img: "test.img",
-            user: ownerUser
+            img: "test.img"
         };
         await Course.findOneAndDelete(mockCourse);
 
